@@ -8,11 +8,29 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
 export function mockPlugin(handlers, options = {}) {
   const {quiet = true} = options
 
-  handlers = Object.entries(handlers).map(async ([path, response]) => {
-    const body = await response.text()
-    return `rest.get('${path}', (req, res, ctx) => {
-      return res(ctx.status(${response.statusCode || 200}), ctx.set(${JSON.stringify(Object.fromEntries(response.headers))}), ctx.body(\`${body}\`))
-    })`
+  handlers = Object.entries(handlers).flatMap(async ([path, response]) => {
+    if (response instanceof Response) {
+      const body = await response.text()
+      return `rest.get('${path}', (req, res, ctx) => {
+        return res(ctx.status(${response.status || 200}), ctx.set(${JSON.stringify(Object.fromEntries(response.headers))}), ctx.body(\`${body}\`))
+      })`
+    } else {
+      return Promise.all(Object.entries(response).flatMap(async ([verb, actualResponse]) => {
+        const body = await actualResponse.text()
+        // TODO, right now we just support POST and GET
+        if (verb === 'GET') {
+          return `rest.get('${path}', (req, res, ctx) => {
+            return res(ctx.status(${actualResponse.status || 200}), ctx.set(${JSON.stringify(Object.fromEntries(actualResponse.headers))}), ctx.body(\`${body}\`))
+          })`
+        } else if (verb === 'POST') {
+          return `rest.post('${path}', (req, res, ctx) => {
+            return res(ctx.status(${actualResponse.status || 200}), ctx.set(${JSON.stringify(Object.fromEntries(actualResponse.headers))}), ctx.body(\`${body}\`))
+          })`
+        } else {
+          throw new Error(`Unsupported verb ${verb} encountered`)
+        }
+      }))
+    }
   })
   return {
     name: 'ing-mocks',

@@ -18,6 +18,10 @@
     "url": "https://github.com/koddsson/web-dev-server-plugin-msw/issues"
   },
   "homepage": "https://github.com/koddsson/web-dev-server-plugin-msw#readme",
+  "files": [
+    "mockServiceWorker.js",
+    "web-dev-server-plugin-msw.js"
+  ],
   "dependencies": {
     "@bundled-es-modules/msw": "^1.0.0"
   }

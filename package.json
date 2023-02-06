@@ -1,0 +1,21 @@
+{
+  "name": "web-dev-server-plugin-msw",
+  "version": "0.0.1",
+  "description": "A Mock Service Worker (msw) plugin for Web Dev Server",
+  "main": "web-dev-server-plugin-msw.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koddsson/web-dev-server-plugin-msw.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/koddsson/web-dev-server-plugin-msw/issues"
+  },
+  "homepage": "https://github.com/koddsson/web-dev-server-plugin-msw#readme"
+}

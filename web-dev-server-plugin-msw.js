@@ -1,4 +1,9 @@
-import { readFileSync } from 'fs';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath} from 'node:url';
+import path from 'node:path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 export function mockPlugin(handlers, options = {}) {
   const {quiet = true} = options
@@ -13,7 +18,8 @@ export function mockPlugin(handlers, options = {}) {
     name: 'ing-mocks',
     serve(context) {
       if (context.request.url === '/mockServiceWorker.js') {
-        return readFileSync('./mockServiceWorker.js', 'utf8');
+        const serviceWorkerPath = path.resolve(__dirname, './mockServiceWorker.js')
+        return readFileSync(serviceWorkerPath, 'utf8');
       }
     },
     async transform(context) {

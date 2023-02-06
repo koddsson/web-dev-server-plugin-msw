@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/koddsson/web-dev-server-plugin-msw/issues"
   },
-  "homepage": "https://github.com/koddsson/web-dev-server-plugin-msw#readme"
+  "homepage": "https://github.com/koddsson/web-dev-server-plugin-msw#readme",
+  "dependencies": {
+    "@bundled-es-modules/msw": "^1.0.0"
+  }
 }

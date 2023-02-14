@@ -5,32 +5,36 @@ import path from 'node:path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
-export function mockPlugin(handlers, options = {}) {
+// TODO: Clean this up a lot and work on the API. I'm thinking that it should have sane defaults.
+// {
+//    '/user': 'koddsson'
+// }
+//
+// Then it's possible to do more complicated things:
+//
+// {
+//   '/user': new Response('{"username": "koddsson"}),
+// }
+//
+// I wonder if we can make `Request` objects be the keys on the object.
+// 
+// {
+//   [new Request('/user', {method: 'POST'})]: new Response('{"username": "koddsson"}),
+// }
+//
+// Then matching requests might be super easy.
+export function mockPlugin(givenHandlers, options = {}) {
   const {quiet = true} = options
 
-  handlers = Object.entries(handlers).flatMap(async ([path, response]) => {
-    if (response instanceof Response) {
-      const body = await response.text()
-      return `rest.get('${path}', (req, res, ctx) => {
-        return res(ctx.status(${response.status || 200}), ctx.set(${JSON.stringify(Object.fromEntries(response.headers))}), ctx.body(\`${body}\`))
-      })`
-    } else {
-      return Promise.all(Object.entries(response).flatMap(async ([verb, actualResponse]) => {
-        const body = await actualResponse.text()
-        // TODO, right now we just support POST and GET
-        if (verb === 'GET') {
-          return `rest.get('${path}', (req, res, ctx) => {
-            return res(ctx.status(${actualResponse.status || 200}), ctx.set(${JSON.stringify(Object.fromEntries(actualResponse.headers))}), ctx.body(\`${body}\`))
-          })`
-        } else if (verb === 'POST') {
-          return `rest.post('${path}', (req, res, ctx) => {
-            return res(ctx.status(${actualResponse.status || 200}), ctx.set(${JSON.stringify(Object.fromEntries(actualResponse.headers))}), ctx.body(\`${body}\`))
-          })`
-        } else {
-          throw new Error(`Unsupported verb ${verb} encountered`)
-        }
-      }))
-    }
+  const handlers = []
+
+  givenHandlers.forEach(async (response, request) => {
+    const body = await response.text()
+    const pathname = new URL(request.url).pathname
+    const verb = ['GET', 'POST'].includes(request.method) ? request.method : 'get'
+    handlers.push(`rest.${verb}('${pathname}', (req, res, ctx) => {
+      return res(ctx.status(${response.status || 200}), ctx.set(${JSON.stringify(Object.fromEntries(response.headers))}), ctx.body(\`${body}\`))
+    })`)
   })
   return {
     name: 'ing-mocks',

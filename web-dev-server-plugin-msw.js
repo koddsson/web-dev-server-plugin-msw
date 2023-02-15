@@ -8,7 +8,7 @@ const rootDir = process.cwd()
 
 export function mockPlugin(filename, options = {}) {
   const script = `<script type="module">
-    import '${filename}';
+    import '${path.resolve(rootDir, filename)}';
   </script>`
 
   return {

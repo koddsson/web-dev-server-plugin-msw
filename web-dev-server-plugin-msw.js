@@ -31,7 +31,7 @@ export function mockPlugin(givenHandlers, options = {}) {
   givenHandlers.forEach(async (response, request) => {
     const body = await response.text()
     const pathname = new URL(request.url).pathname
-    const verb = ['GET', 'POST'].includes(request.method) ? request.method : 'get'
+    const verb = ['GET', 'POST'].includes(request.method) ? request.method.toLowerCase() : 'get'
     handlers.push(`rest.${verb}('${pathname}', (req, res, ctx) => {
       return res(ctx.status(${response.status || 200}), ctx.set(${JSON.stringify(Object.fromEntries(response.headers))}), ctx.body(\`${body}\`))
     })`)

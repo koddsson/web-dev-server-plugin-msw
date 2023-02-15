@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/koddsson/web-dev-server-plugin-msw#readme",
   "files": [
+    "msw.js",
     "mockServiceWorker.js",
     "web-dev-server-plugin-msw.js"
   ],

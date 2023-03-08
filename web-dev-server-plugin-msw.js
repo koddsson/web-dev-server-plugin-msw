@@ -5,7 +5,7 @@ import path from 'node:path';
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const rootDir = process.cwd()
 
-export function mockPlugin(filename, options = {}) {
+export function mockPlugin(filename) {
   const script = `<script type="module">
     import '${path.resolve(rootDir, filename)}';
   </script>`

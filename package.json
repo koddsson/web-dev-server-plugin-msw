@@ -24,6 +24,6 @@
     "web-dev-server-plugin-msw.js"
   ],
   "dependencies": {
-    "msw": "^0.0.0-fetch.rc-8"
+    "msw": "^0.0.0-fetch.rc-10"
   }
 }

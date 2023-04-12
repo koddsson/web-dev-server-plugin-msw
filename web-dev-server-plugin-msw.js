@@ -13,7 +13,7 @@ export function mockPlugin(filename) {
   return {
     name: 'ing-mocks',
     serve(context) {
-      if (context.request.url === '/mockServiceWorker.js') {
+      if (context.request.url === '/__msw_sw__.js') {
         const serviceWorkerPath = path.resolve(__dirname, './mockServiceWorker.js')
         return readFileSync(serviceWorkerPath, 'utf8');
       }

@@ -23,7 +23,5 @@
     "mockServiceWorker.js",
     "web-dev-server-plugin-msw.js"
   ],
-  "dependencies": {
-    "msw": "^0.0.0-fetch.rc-10"
-  }
+  "dependencies": {}
 }

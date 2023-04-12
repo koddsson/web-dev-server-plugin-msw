@@ -1,4 +1,5 @@
-import {rest, setupWorker } from 'msw';
+import { setupWorker } from './msw-browser-bundled.js';
+import { rest } from './msw-core-bundled.js';
 
 const worker = setupWorker()
 worker.start({

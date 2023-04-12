@@ -1,5 +1,5 @@
 import { setupWorker } from './msw-browser-bundled.js';
-import { rest } from './msw-core-bundled.js';
+import { rest, HttpResponse } from './msw-core-bundled.js';
 
 const worker = setupWorker()
 worker.start({
@@ -13,4 +13,4 @@ worker.start({
   },
 });
 
-export {worker, rest}
+export {worker, rest, HttpResponse}

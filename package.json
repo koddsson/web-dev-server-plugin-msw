@@ -1,6 +1,6 @@
 {
   "name": "@koddsson/web-dev-server-plugin-msw",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "A Mock Service Worker (msw) plugin for Web Dev Server",
   "main": "web-dev-server-plugin-msw.js",
   "type": "module",

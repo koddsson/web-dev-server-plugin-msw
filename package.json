@@ -21,9 +21,9 @@
   "files": [
     "msw.js",
     "mockServiceWorker.js",
-    "web-dev-server-plugin-msw.js",
-    "msw-browser-bundled.js",
-    "msw-core-bundled.js"
+    "web-dev-server-plugin-msw.js"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "msw": "^0.0.0-fetch.rc-13"
+  }
 }

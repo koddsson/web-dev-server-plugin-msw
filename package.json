@@ -26,6 +26,7 @@
   ],
   "exports": {
     ".": "web-dev-server-plugin-msw.js",
+    "./mockServiceWorker.js": "mockServiceWorker.js",
     "./storybook/decorator": "storybook-decorator.js"
   },
   "dependencies": {

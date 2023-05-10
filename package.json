@@ -25,9 +25,9 @@
     "web-dev-server-plugin-msw.js"
   ],
   "exports": {
-    ".": "web-dev-server-plugin-msw.js",
-    "./mockServiceWorker.js": "mockServiceWorker.js",
-    "./storybook/decorator": "storybook-decorator.js"
+    ".": "./web-dev-server-plugin-msw.js",
+    "./mockServiceWorker.js": "./mockServiceWorker.js",
+    "./storybook/decorator": "./storybook-decorator.js"
   },
   "dependencies": {
     "@web/storybook-prebuilt": "^0.1.34",

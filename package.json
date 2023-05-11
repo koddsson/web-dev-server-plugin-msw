@@ -22,11 +22,14 @@
     "msw.js",
     "mockServiceWorker.js",
     "storybook-decorator.js",
-    "web-dev-server-plugin-msw.js"
+    "web-dev-server-plugin-msw.js",
+    "rollup-plugin.js"
+
   ],
   "exports": {
     ".": "./web-dev-server-plugin-msw.js",
     "./mockServiceWorker.js": "./mockServiceWorker.js",
+    "./rollup/plugin": "./rollup-plugin.js",
     "./storybook/decorator": "./storybook-decorator.js"
   },
   "dependencies": {

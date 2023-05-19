@@ -27,6 +27,7 @@
   ],
   "exports": {
     ".": "./web-dev-server-plugin-msw.js",
+    "./msw.js": "./msw.js",
     "./mockServiceWorker.js": "./mockServiceWorker.js",
     "./rollup/plugin": "./rollup-plugin.js",
     "./storybook/decorator": "./storybook-decorator.js"

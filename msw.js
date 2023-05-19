@@ -13,4 +13,27 @@ worker.start({
   },
 });
 
-export {worker, rest, HttpResponse}
+/**
+ * Set up mocking routes
+ *
+ * @param {(rest, response, worker) => unknown[]} mocks Callback that returns the MSW mocks.
+ * @param {unknown[]} defaultRoutes The default routes
+ */
+function setRoutes(mocks, defaultRoutesCallback) {
+  // Set up basic routes for convenience if they exists
+  const defaultRoutes = defaultRoutesCallback?.({rest, HttpResponse, worker}) || [];
+  if (!mocks) {
+  worker.use(...defaultRoutes);
+  } else {
+    const routes = mocks({
+      rest,
+      HttpResponse,
+      worker,
+    });
+    if (routes) {
+      worker.resetHandlers(...routes, ...defaultRoutes);
+    }
+  }
+}
+
+export {worker, rest, HttpResponse, setRoutes}

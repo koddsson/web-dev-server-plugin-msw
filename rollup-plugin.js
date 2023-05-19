@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+
 export default function mswRollupPlugin() {
   return {
     name: 'rollup-plugin-msw',

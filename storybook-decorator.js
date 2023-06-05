@@ -28,5 +28,3 @@ export function withMocks(mocks) {
     },
   });
 }
-
-export { rest, HttpResponse, worker };

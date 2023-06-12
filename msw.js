@@ -18,7 +18,7 @@ worker.start({
  *
  * @param {Array<(rest, response, worker) => unknown[]>} mocks Callback that returns the MSW mocks.
  */
-function setRoutes(...routeCallbacks) {
+function mockNetworkRequests(...routeCallbacks) {
   const routes = []
   for (const callback of routeCallbacks) {
     routes.push(...(callback?.({ rest, HttpResponse, worker }) || []));
@@ -27,4 +27,4 @@ function setRoutes(...routeCallbacks) {
   worker.resetHandlers(...routes);
 }
 
-export { worker, rest, HttpResponse, setRoutes };
+export { worker, rest, HttpResponse, mockNetworkRequests };

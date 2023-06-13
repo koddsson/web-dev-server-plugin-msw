@@ -26,7 +26,8 @@
     "rollup-plugin.js",
     "node.js",
     "browser.js",
-    "rest.js"
+    "rest.js",
+    "process.js"
   ],
   "exports": {
     "./rest.js": "./rest.js",

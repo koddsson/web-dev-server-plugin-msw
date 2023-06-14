@@ -93,8 +93,8 @@ module.exports = {
 `feature-a/stories/default.stories.js`:
 ```js
 import { html } from 'lit';
-import mocks from '../demo/mocks.js';
 import { rest } from 'msw-integration-layer/rest.js';
+import mocks from '../demo/mocks.js';
 
 export const Default = () => html`<feature-a></feature-a>`;
 Default.story = {

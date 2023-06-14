@@ -1,6 +1,6 @@
 {
   "name": "msw-integration-layer",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "A Mock Service Worker (msw) plugin for Web Dev Server",
   "main": "web-dev-server-plugin-msw.js",
   "type": "module",

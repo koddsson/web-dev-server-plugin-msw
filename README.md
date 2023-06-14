@@ -135,7 +135,7 @@ export default {
 ```js
 import { registerMockRoutes, rest } from 'msw-integration-layer';
 import mocks from '../demo/mocks.js';
-import mocks as featureBmocks from 'feature-b/demo/mocks.js';
+import featureBmocks from 'feature-b/demo/mocks.js';
  
 describe('feature-a', () => {
   it('works', async () => {

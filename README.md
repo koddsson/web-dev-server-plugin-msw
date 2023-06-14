@@ -7,6 +7,7 @@
 `feature-a/demo/mocks.js`:
 ```js
 import { rest } from 'msw-integration-layer/rest.js';
+import mocksFromAnotherFeature from 'another-feature/demo/mocks.js';
  
 /**
  * Define mock scenarios
@@ -51,6 +52,10 @@ export default {
     rest.get('/api/foo', async (context) => new Response(JSON.stringify({foo: 'bar'}), {status: 200})),
     rest.get('/api/foo', (context) => Response.json({foo: 'bar'})),
     rest.get('/api/foo', (context) => new Response(JSON.stringify({foo: 'bar'}), {status: 200})),
+  ],
+  importedMocks: [
+    mocksFromAnotherFeature.default,
+    rest.get('/api/foo', () => Response.json({foo: 'bar'}))
   ]
 }
 ```
@@ -172,8 +177,8 @@ Large applications may have many features, that themself may depend on other fea
 - `feature-b` uses `msw@2.0.0`
 
 ```js
-import { mocks } from '../demo/mocks.js';
-import { mocks as featureBmocks } from 'feature-b/demo/mocks.js';
+import mocks from '../demo/mocks.js';
+import featureBmocks from 'feature-b/demo/mocks.js';
  
 const Default = () => html`<feature-a></feature-a>`; // uses `feature-b` internally
 Default.story = {

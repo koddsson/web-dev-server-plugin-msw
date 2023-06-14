@@ -24,6 +24,8 @@ const SUPPORTED_METHODS = ['get', 'post', 'put', 'patch', 'delete', 'options'];
  */
 
 /**
+Mock the given mocked routes using a Service Worker.
+
  * @param  {Array<Array<Mock>|Mock>} mocks 
  */
 function registerMockRoutes(...mocks) {

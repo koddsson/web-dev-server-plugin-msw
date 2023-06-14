@@ -51,20 +51,6 @@ export default {
     rest.get('/api/foo', async (context) => new Response(JSON.stringify({foo: 'bar'}), {status: 200})),
     rest.get('/api/foo', (context) => Response.json({foo: 'bar'})),
     rest.get('/api/foo', (context) => new Response(JSON.stringify({foo: 'bar'}), {status: 200})),
-  ],
-  /**
-   * You can even just write them manually without the `rest` wrapper:
-   */
-  manually: [
-    {
-      method: 'get',
-      endpoint: '/api/foo',
-      handler: async (context) => Response.json({foo: 'bar'}),
-      // or
-      handler: (context) => Response.json({foo: 'bar'}),
-      // or
-      handler: (context) => new Response(JSON.stringify({foo: 'bar'}), {status: 200}),
-    }
   ]
 }
 ```

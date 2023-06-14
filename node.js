@@ -1,2 +1,2 @@
-export * from './rollup-plugin.js';
-export * from './web-dev-server-plugin-msw.js';
+export { mswRollupPlugin } from './rollup-plugin.js';
+export { mockPlugin } from './wds-plugin.js';

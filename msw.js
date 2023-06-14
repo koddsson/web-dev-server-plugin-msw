@@ -1,4 +1,4 @@
-import { rest, HttpResponse } from "msw";
+import { rest } from "msw";
 import { setupWorker } from "msw/browser";
 
 const worker = setupWorker();
@@ -13,18 +13,38 @@ worker.start({
   },
 });
 
+
+const SUPPORTED_METHODS = ['get', 'post', 'put', 'patch', 'delete', 'options'];
+
 /**
- * Set up mocking routes
- *
- * @param {Array<(rest, response, worker) => unknown[]>} mocks Callback that returns the MSW mocks.
+ * @typedef {Object} Mock
+ * @property {string} method
+ * @property {string} endpoint
+ * @property {({request}: {request: Request}) => Response | Promise<Response>} handler
  */
-function mockNetworkRequests(...routeCallbacks) {
-  const routes = []
-  for (const callback of routeCallbacks) {
-    routes.push(...(callback?.({ rest, HttpResponse, worker }) || []));
+
+/**
+Mock the given mocked routes using a Service Worker.
+
+ * @param  {Array<Array<Mock>|Mock>} mocks 
+ */
+function registerMockRoutes(...mocks) {
+  worker.resetHandlers();
+ 
+  const handlers = [];
+  for(const { method, endpoint, handler } of mocks.flat(Infinity)) {
+    if(!SUPPORTED_METHODS.includes(method.toLowerCase())) {
+      throw new Error(`Unsupported method ${method}`);
+    }
+    
+    handlers.push(rest[method](endpoint, async (res, req, context) => {
+      const response = await handler({request: req});
+
+      return response;
+    }))
   }
 
-  worker.resetHandlers(...routes);
+  worker.use(...handlers);
 }
 
-export { worker, rest, HttpResponse, mockNetworkRequests };
+export { worker, registerMockRoutes };

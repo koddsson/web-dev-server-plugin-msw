@@ -1,5 +1,5 @@
 {
-  "name": "@koddsson/web-dev-server-plugin-msw",
+  "name": "msw-integration-layer",
   "version": "0.8.0",
   "description": "A Mock Service Worker (msw) plugin for Web Dev Server",
   "main": "web-dev-server-plugin-msw.js",
@@ -22,14 +22,17 @@
     "msw.js",
     "mockServiceWorker.js",
     "storybook-decorator.js",
-    "web-dev-server-plugin-msw.js",
+    "wds-plugin.js",
     "rollup-plugin.js",
     "node.js",
-    "browser.js"
+    "browser.js",
+    "rest.js",
+    "polyfills.js"
   ],
   "exports": {
-    "./browser": "./browser.js",
-    "./node": "./node.js"
+    "./rest.js": "./rest.js",
+    "./browser.js": "./browser.js",
+    "./node.js": "./node.js"
   },
   "dependencies": {
     "@web/storybook-prebuilt": "^0.1.34",

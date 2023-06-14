@@ -27,7 +27,7 @@
     "node.js",
     "browser.js",
     "rest.js",
-    "process.js"
+    "polyfills.js"
   ],
   "exports": {
     "./rest.js": "./rest.js",

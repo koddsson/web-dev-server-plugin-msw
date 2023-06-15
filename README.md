@@ -29,19 +29,35 @@ export default {
    * Handle additional custom logic in the handler, based on url, searchparams, whatever
    */
   custom: [
+    /**
+     * Customize based on searchParams
+     */
     rest.get('/api/users', ({request}) => {
-      if(request.url.searchParams.get('user') === '123') {
+      const searchParams = new URL(request.url).searchParams;
+
+      if(searchParams.get('user') === '123') {
         return Response.json({ id: '123', name: 'frank' });
       }
    
       return Response.json({ id: '456', name: 'bob' });
     }),
-    rest.get('/api/users/:id', ({request}) => {
-      if(request.params.id === '123') {
+
+    /**
+     * Customize based on params
+     */
+    rest.get('/api/users/:id', ({params}) => {
+      if(params.id === '123') {
         return new Response('', {status: 400});
       }
  
       return Response.json({ id: '456', name: 'bob' });
+    }),
+
+    /**
+     * Customize based on cookies
+     */
+    rest.get('/api/abtest', ({cookies}) => {
+      return Response.json({ abtest: cookies.segment === 'business' });
     })
   ],
   /**
@@ -59,6 +75,20 @@ export default {
   ]
 }
 ```
+
+### Context
+
+The `context` object that gets passed to the handler includes:
+
+```js
+rest.get('/api/foo', ({request, cookies, params}) => {
+  return Response.json({foo: 'bar'});
+});
+```
+
+- `request` the native `Request` object
+- `cookies` an object based on the request cookies
+- `params` an object based on the request params
 
 ## `@web/dev-server`/`@web/dev-server-storybook`
 
@@ -109,8 +139,8 @@ Default.story = {
     ],
     // or
     mocks: [
-      rest.get('/api/users/:id', ({request}) => {
-        if (request.params.id === '123') {
+      rest.get('/api/users/:id', ({params}) => {
+        if (params.id === '123') {
           return Response.json({name: 'frank'});
         }
         return Response.json({name: 'bob'});
@@ -197,7 +227,7 @@ Default.story = {
 ```js
 import { rest } from 'msw-integration-layer/rest.js';
 
-rest.get('/api/foo', ({request}) => Response.json({foo: 'bar'}));
+rest.get('/api/foo', () => Response.json({foo: 'bar'}));
 ```
 
 The middleware function simply returns an object that looks like:
@@ -206,7 +236,7 @@ The middleware function simply returns an object that looks like:
 {
   method: 'get',
   endpoint: '/api/foo',
-  handler: ({request}) => Response.json({foo: 'bar'})
+  handler: () => Response.json({foo: 'bar'})
 }
 ```
 
@@ -214,7 +244,7 @@ This way we can support multiple versions of `msw` inside of our integration lay
 
 That way, `feature-a`'s project controls the dependency on `msw` (via the msw integration layer package), while still being able to use mocks from other projects that may use a different version of `msw` themself internally.
 
-In the wrapper, we standardize on native `Request` and `Response` objects; the handler function receives a `Request` object, and returns a `Response` object. This means that the wrapper function only depends on standard, browser-native JS, and itself has no other dependencies, which is a good foundation to ensure forward compatibility.
+In the wrapper, we standardize on native `Request` and `Response` objects; the handler function receives a `Request` object, and returns a `Response` object. For utility, we also pass `cookies` and `params`, since those are often used to conditionally return mocks. This means that the wrapper function only depends on standard, browser-native JS, and itself has no other dependencies, which is a good foundation to ensure forward compatibility.
 
 ### Requests/Responses
 

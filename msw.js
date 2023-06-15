@@ -37,8 +37,8 @@ function registerMockRoutes(...mocks) {
       throw new Error(`Unsupported method ${method}`);
     }
     
-    handlers.push(rest[method](endpoint, async (res, req, context) => {
-      const response = await handler({request: req});
+    handlers.push(rest[method](endpoint, async ({cookies, params, request}) => {
+      const response = await handler({request, cookies, params});
 
       return response;
     }))
